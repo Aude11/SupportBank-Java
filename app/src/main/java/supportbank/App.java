@@ -7,13 +7,9 @@ import java.util.ArrayList;
 
 public class App {
     public String getGreeting() {
-        CvsReader cvsBankReader = new CvsReader();
-        ArrayList<ArrayList<String>> recordTransactions = new ArrayList<ArrayList<String>>();
-        try {
-            recordTransactions = cvsBankReader.readRecords();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Controler controler = new Controler();
+        controler.createAccount();
+        //ArrayList<ArrayList<String>> recordTransactions = new ArrayList<ArrayList<String>>();
         return "Hello World!";
     }
 

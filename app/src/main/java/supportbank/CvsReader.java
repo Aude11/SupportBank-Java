@@ -6,12 +6,10 @@ import java.util.ArrayList;
 public class CvsReader {
     String Path = "/home/aude/Desktop/BootCamp/SupportBank-Java/Transactions2014.csv";
     public ArrayList<ArrayList<String>> readRecords() throws Exception {
-
         ArrayList<ArrayList<String>> recordsTransactions = new ArrayList<ArrayList<String>>();
         String fileLine;
         String splitBy = ",";
         int counterNbTransaction = 0;
-
         try (Scanner scanner = new Scanner(new File(Path))) {
             scanner.useDelimiter(";");
             String[] headerFile = scanner.nextLine().split(splitBy);
@@ -27,8 +25,7 @@ public class CvsReader {
                 //System.out.println("la")
             }
         }
-        System.out.println("here");
-        System.out.println(recordsTransactions);
         return  recordsTransactions;
     }
+
 }
