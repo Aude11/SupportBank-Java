@@ -9,7 +9,6 @@ public class App {
     public String getGreeting() {
         Controler controler = new Controler();
         controler.createAccount();
-        //ArrayList<ArrayList<String>> recordTransactions = new ArrayList<ArrayList<String>>();
         return "Hello World!";
     }
 

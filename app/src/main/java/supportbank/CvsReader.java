@@ -4,7 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class CvsReader {
-    String Path = "/home/aude/Desktop/BootCamp/SupportBank-Java/Transactions2014.csv";
+    //String Path = "/home/aude/Desktop/BootCamp/SupportBank-Java/Transactions2014.csv"; //put better path
+    String Path = "Transactions2014.csv";
     public ArrayList<ArrayList<String>> readRecords() throws Exception {
         ArrayList<ArrayList<String>> recordsTransactions = new ArrayList<ArrayList<String>>();
         String fileLine;

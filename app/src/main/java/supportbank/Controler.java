@@ -8,40 +8,67 @@ public class Controler {
     //private ArrayList<ArrayList<String>> recordsTransactions;
     public void createAccount() {
         CvsReader cvsBankReader = new CvsReader();
-        int colPositionName = 1;
+        int colPositionNameFrom = 1;
+        int colPositionNameTo = 2;
         int colPositionAmount = 4;
         ArrayList<ArrayList<String>> recordTransactions = new ArrayList<ArrayList<String>>();
         // Create a HashMap object that store all the account
         HashMap<String, Double> account = new HashMap<String, Double>();
+        HashMap<String, ArrayList<ArrayList<String>>> account2 = new HashMap<String, ArrayList<ArrayList<String>>>();
         try {
             recordTransactions = cvsBankReader.readRecords();
             for (int i = 0; i < recordTransactions.size(); i++){
-                String nameOfAccountFrom = recordTransactions.get(i).get(1);
-                String nameOfAccountTo = recordTransactions.get(i).get(2);
-                //String a = recordTransactions.get(i).get()
-                double amountTransferred = Double.parseDouble(recordTransactions.get(i).get(4));
-                if (account.containsKey(nameOfAccountFrom)) { // this should be a method
-                    double amountInitial = account.get(nameOfAccountFrom);
-                    double newAmount = amountInitial - amountTransferred;
-                    account.put(nameOfAccountFrom, newAmount);
+                String nameOfAccountFrom = recordTransactions.get(i).get(colPositionNameFrom);
+                String nameOfAccountTo = recordTransactions.get(i).get(colPositionNameTo);
+                double amountTransferred = Double.parseDouble(recordTransactions.get(i).get(colPositionAmount));
+                updateIncomingMoney(account, nameOfAccountTo, amountTransferred);
+                updateOutgoingMoney(account, nameOfAccountFrom, amountTransferred);
+
+                if (account2.containsKey(nameOfAccountFrom)) { 
+                    ArrayList<ArrayList<String>> values = account2.get(nameOfAccountFrom);
+                    values.add(recordTransactions.get(i));
+                    account2.put(nameOfAccountFrom, values);
                 } else {
-                    double amountDeducted = - amountTransferred;
-                    account.put(nameOfAccountFrom,amountDeducted); // carefull
+                    ArrayList<ArrayList<String>> values = new ArrayList<ArrayList<String>>();
+                    values.add(recordTransactions.get(i));
+                    account2.put(nameOfAccountFrom, values); 
                 }
-                if (account.containsKey(nameOfAccountTo)) { // this should be a method
-                    double amountInitial = account.get(nameOfAccountTo);
-                    double newAmount = amountInitial + amountTransferred;
-                    account.put(nameOfAccountTo, newAmount);
+                if (account2.containsKey(nameOfAccountTo)) { 
+                    ArrayList<ArrayList<String>> values = account2.get(nameOfAccountTo);
+                    values.add(recordTransactions.get(i));
+                    account2.put(nameOfAccountTo, values);
                 } else {
-                    account.put(nameOfAccountFrom,amountTransferred);
+                    ArrayList<ArrayList<String>> values = new ArrayList<ArrayList<String>>();
+                    values.add(recordTransactions.get(i));
+                    account2.put(nameOfAccountTo, values); 
                 }
+
+
+
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println(account);
-        //account.put()
+        System.out.println(account2.get("Sarah T"));
+    }
 
+    public static void updateIncomingMoney (HashMap<String, Double> account, String nameOfAccount, double amount) {
+        if (account.containsKey(nameOfAccount)) { 
+            double newAmount = account.get(nameOfAccount) + amount;
+            account.put(nameOfAccount, newAmount);
+        } else {
+            account.put(nameOfAccount,amount); 
+        }
+    }
 
+    public static void updateOutgoingMoney (HashMap<String, Double> account, String nameOfAccount, double amount) {
+            if (account.containsKey(nameOfAccount)) { 
+                double newAmount = account.get(nameOfAccount) - amount;
+                account.put(nameOfAccount, newAmount);
+            } else {
+                double newAmount = - amount;
+                account.put(nameOfAccount,newAmount); 
+            }
+    
     }
 }
