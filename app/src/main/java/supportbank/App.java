@@ -9,13 +9,14 @@ import java.util.HashMap;
 public class App {
     public String getGreeting() {
         Account accounts = new Account();
-        CvsReader cvsBankReader = new CvsReader();// put in argument
-        HashMap<String, ArrayList<ArrayList<String>>> model= new HashMap<String, ArrayList<ArrayList<String>>>();
-        model = accounts.create(cvsBankReader);
+        CvsReader cvsBankReader = new CvsReader();// put in argument model
+        HashMap<String, ArrayList<ArrayList<String>>> allAccounts = new HashMap<String, ArrayList<ArrayList<String>>>();
+        allAccounts= accounts.create(cvsBankReader);
         Controler controler= new Controler ();
-        View view = new View(controler, model);
+        View view = new View(controler, allAccounts);
 
-        view.displayAccountTransactions("Ben B");
+        //view.displayAccountTransactions("Ben B");
+        view.displayAll();
         return "Hello World!";
     }
 

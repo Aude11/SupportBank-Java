@@ -6,27 +6,32 @@ import java.util.ArrayList;
 
 public class Controler {
     //private ArrayList<ArrayList<String>> recordsTransactions;
-    public void calculateBalance() {
-        CvsReader cvsBankReader = new CvsReader();
-        int colPositionNameFrom = 1;
-        int colPositionNameTo = 2;
-        int colPositionAmount = 4;
-        ArrayList<ArrayList<String>> recordTransactions = new ArrayList<ArrayList<String>>();
-        // Create a HashMap object that store all the account
-        HashMap<String, Double> account = new HashMap<String, Double>();
-        try {
-            recordTransactions = cvsBankReader.readRecords();
-            for (int i = 0; i < recordTransactions.size(); i++){
-                String nameOfAccountFrom = recordTransactions.get(i).get(colPositionNameFrom);
-                String nameOfAccountTo = recordTransactions.get(i).get(colPositionNameTo);
-                double amountTransferred = Double.parseDouble(recordTransactions.get(i).get(colPositionAmount));
-                updateIncomingMoney(account, nameOfAccountTo, amountTransferred);
-                updateOutgoingMoney(account, nameOfAccountFrom, amountTransferred);
+    public double calculateBalance(HashMap<String, ArrayList<ArrayList<String>>> model){ //refactor this
+        for (String name : model.keySet()) {
+            ArrayList<ArrayList<String>> allTransactions = new ArrayList<ArrayList<String>>();
+            allTransactions = model.get(name);
+            int colPositionNameFrom = 1;
+            int colPositionNameTo = 2;
+            int colPositionAmount = 4;
+            double balance = 0.0;
+            for (int i = 0; i < allTransactions .size(); i++){
+                String nameOfAccountFrom = allTransactions.get(i).get(colPositionNameFrom);
+                String nameOfAccountTo = allTransactions.get(i).get(colPositionNameTo);
+                double amountTransferred = Double.parseDouble(allTransactions .get(i).get(colPositionAmount));
+                if (nameOfAccountFrom.equals(name)) {
+                    // subtract money
+                    balance = balance - amountTransferred;
+                } else if (nameOfAccountTo.equals(name)) {
+                    // add money to account
+                    balance += amountTransferred;
+                } else {
+                    System.out.println("Something went wrong: transaction name issue");
+                }
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+
+            System.out.println("Name: " + name + " Balance: " + balance);
         }
-        System.out.println(account.get("Sarah T"));
+        return 0.0;
     }
 
     public static void updateIncomingMoney (HashMap<String, Double> account,

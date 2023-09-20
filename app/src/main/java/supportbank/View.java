@@ -14,7 +14,7 @@ public class View {
 
     public void displayAll(){
         // display name and amount
-        controler.calculateBalance();
+        double a = controler.calculateBalance(model);
     }
     public void displayAccountTransactions(String accountName){
         ArrayList<ArrayList<String>>allTransactions = new ArrayList<ArrayList<String>>();
