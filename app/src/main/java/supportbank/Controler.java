@@ -52,6 +52,23 @@ public class Controler {
         System.out.println(account.get("Sarah T"));
     }
 
+
+    public static void updateAccountListOfTransaction(HashMap<String, ArrayList<ArrayList<String>>> account,
+                                                      String nameOfAccount, ArrayList<ArrayList<String>> transactions,
+                                                      int numbOfLineToAdd){
+        ArrayList<ArrayList<String>> value;
+        if (account.containsKey(nameOfAccount)) {
+            value = account.get(nameOfAccount);
+            //value.add(transactions.get(i));
+            //account.put(nameOfAccount, value);
+        } else {
+            value = new ArrayList<ArrayList<String>>();
+            //value.add(transactions.get(i));
+            //account.put(nameOfAccount, value);
+        }
+        value.add(transactions.get(numbOfLineToAdd));
+        account.put(nameOfAccount, value);
+    }
     public static void updateIncomingMoney (HashMap<String, Double> account, String nameOfAccount, double amount) {
         if (account.containsKey(nameOfAccount)) { 
             double newAmount = account.get(nameOfAccount) + amount;
