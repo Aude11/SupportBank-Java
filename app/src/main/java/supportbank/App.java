@@ -10,10 +10,12 @@ public class App {
     public String getGreeting() {
         Account accounts = new Account();
         CvsReader cvsBankReader = new CvsReader();// put in argument
-        HashMap<String, ArrayList<ArrayList<String>>> allAccount = new HashMap<String, ArrayList<ArrayList<String>>>();
-        allAccount = accounts.create(cvsBankReader);
-        View view = new View();
-        view.displayAccountTransactions(allAccount, "Ben B");
+        HashMap<String, ArrayList<ArrayList<String>>> model= new HashMap<String, ArrayList<ArrayList<String>>>();
+        model = accounts.create(cvsBankReader);
+        Controler controler= new Controler ();
+        View view = new View(controler, model);
+
+        view.displayAccountTransactions("Ben B");
         return "Hello World!";
     }
 

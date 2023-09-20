@@ -43,13 +43,14 @@ public class Controler {
     public static void updateOutgoingMoney (HashMap<String, Double> account,
                                             String nameOfAccount,
                                             double amount) {
-            if (account.containsKey(nameOfAccount)) { 
-                double newAmount = account.get(nameOfAccount) - amount;
-                account.put(nameOfAccount, newAmount);
+        double newAmount;
+        if (account.containsKey(nameOfAccount)) {
+                newAmount = account.get(nameOfAccount) - amount;
             } else {
-                double newAmount = - amount;
-                account.put(nameOfAccount,newAmount); 
+                newAmount = - amount;
+
             }
-    
+            account.put(nameOfAccount,newAmount);
+
     }
 }

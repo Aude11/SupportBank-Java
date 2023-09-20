@@ -4,17 +4,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class View {
-    public static void displayAll(){
-        // display name and amount
+   private Controler controler;
+   private HashMap<String, ArrayList<ArrayList<String>>> model;
+
+    public View(Controler controler, HashMap<String, ArrayList<ArrayList<String>>> model) {
+        this.controler = controler;
+        this.model= model;
     }
-    public static void displayAccountTransactions(HashMap<String, ArrayList<ArrayList<String>>> accounts,
-                                                  String accountName){
+
+    public void displayAll(){
+        // display name and amount
+        controler.calculateBalance();
+    }
+    public void displayAccountTransactions(String accountName){
         ArrayList<ArrayList<String>>allTransactions = new ArrayList<ArrayList<String>>();
-        allTransactions = accounts.get(accountName);
+        allTransactions = model.get(accountName);
         for (ArrayList<String> allTransaction : allTransactions) {
             System.out.println(allTransaction);
         }
 
+    }
+
+    public static void checkUserInput(String operation) {
+        //
     }
 
     public static void manageUserInput(){
@@ -25,11 +37,6 @@ public class View {
         System.out.println("List [Account]");
         Scanner scanner = new Scanner(System.in);
         String operation = scanner.next();
-        if (operation.equals(listAllCommand)) {
-            displayAll();
-        } else {
-            //displayAccountTransactions(accounts, accountName);
-        }
-
+        checkUserInput(operation);
     }
 }
