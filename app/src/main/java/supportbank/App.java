@@ -4,11 +4,16 @@
 package supportbank;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class App {
     public String getGreeting() {
-        Controler controler = new Controler();
-        controler.createAccount();
+        Account accounts = new Account();
+        CvsReader cvsBankReader = new CvsReader();// put in argument
+        HashMap<String, ArrayList<ArrayList<String>>> allAccount = new HashMap<String, ArrayList<ArrayList<String>>>();
+        allAccount = accounts.create(cvsBankReader);
+        View view = new View();
+        view.displayAccountTransactions(allAccount, "Ben B");
         return "Hello World!";
     }
 

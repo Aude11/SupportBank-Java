@@ -1,30 +1,42 @@
 package supportbank;
-
-import org.checkerframework.checker.units.qual.A;
+// Import the HashMap class
+import java.util.HashMap;
 
 import java.util.ArrayList;
 
-public class Account {
-    private String name;
-    private double balance = 0;
-    private ArrayList<ArrayList<String>> transactionHistory;
-    public Account (String name){
-        this.name = name;
-        //this.transactionHistory = transactions;
+public class Account{
+    public HashMap<String, ArrayList<ArrayList<String>>> create(CvsReader cvsBankReader) {
+        //CvsReader cvsBankReader = new CvsReader();// put in argument
+        int colPositionNameFrom = 1;
+        int colPositionNameTo = 2;
+        ArrayList<ArrayList<String>> recordTransactions = new ArrayList<ArrayList<String>>();
+        HashMap<String, ArrayList<ArrayList<String>>> account = new HashMap<String, ArrayList<ArrayList<String>>>();
+        try {
+            recordTransactions = cvsBankReader.readRecords();
+            for (int i = 0; i < recordTransactions.size(); i++){
+                String nameOfAccountFrom = recordTransactions.get(i).get(colPositionNameFrom);
+                String nameOfAccountTo = recordTransactions.get(i).get(colPositionNameTo);
+                updateAccountListOfTransaction(account, nameOfAccountFrom, recordTransactions, i);
+                updateAccountListOfTransaction(account, nameOfAccountTo, recordTransactions, i);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        //System.out.println(account.get("Sarah T"));
+        return account;
     }
-    public String getName() {
-        return name;
+    public static void updateAccountListOfTransaction(HashMap<String, ArrayList<ArrayList<String>>> account,
+                                                      String nameOfAccount,
+                                                      ArrayList<ArrayList<String>> transactions,
+                                                      int numbOfLineToAdd){
+        ArrayList<ArrayList<String>> value;
+        if (account.containsKey(nameOfAccount)) {
+            value = account.get(nameOfAccount);
+        } else {
+            value = new ArrayList<ArrayList<String>>();
+        }
+        value.add(transactions.get(numbOfLineToAdd));
+        account.put(nameOfAccount, value);
     }
 
-    public double getBalance() {
-        return balance;
-    }
-
-    public ArrayList<ArrayList<String>> getTransactionHistory() {
-        return transactionHistory;
-    }
-
-    public void setBalance(double amount){
-        balance += amount;
-    }
 }
