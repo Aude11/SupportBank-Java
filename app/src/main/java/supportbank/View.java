@@ -13,8 +13,18 @@ public class View {
     }
 
     public void displayAll(){
-        // display name and amount
-        double a = controler.calculateBalance(model);
+        int colPositionNameFrom = 1;
+        int colPositionNameTo = 2;
+        int colPositionAmount = 4;
+        for (String name : model.keySet()) {
+            ArrayList<ArrayList<String>> allTransactions = new ArrayList<ArrayList<String>>();
+            allTransactions = model.get(name);
+
+            double balance = 0.0;
+            balance = controler.calculateBalance(allTransactions, name, colPositionNameFrom , colPositionNameTo, colPositionAmount);
+            System.out.println("Name: " + name + " Balance: " + balance);
+        }
+
     }
     public void displayAccountTransactions(String accountName){
         ArrayList<ArrayList<String>>allTransactions = new ArrayList<ArrayList<String>>();

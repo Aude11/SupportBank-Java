@@ -14,8 +14,7 @@ public class App {
         allAccounts= accounts.create(cvsBankReader);
         Controler controler= new Controler ();
         View view = new View(controler, allAccounts);
-
-        //view.displayAccountTransactions("Ben B");
+        view.displayAccountTransactions("Chris W");
         view.displayAll();
         return "Hello World!";
     }
